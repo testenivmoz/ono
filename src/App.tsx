@@ -26,14 +26,13 @@ function App() {
       query: searchQuery || undefined
     };
     fetchDocuments(searchFilters);
-  }, [searchQuery, filters]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     setShowHero(false);
   };
 
-  const handleView = (document: Document) => {
+  const handleView = (document: DocumentWithRelations) => {
     incrementViewCount(document.id);
     console.log('Visualizando documento:', document.title);
     // Here you would open the PDF viewer
@@ -42,7 +41,7 @@ function App() {
     }
   };
 
-  const handleDownload = (document: Document) => {
+  const handleDownload = (document: DocumentWithRelations) => {
     incrementDownloadCount(document.id);
     console.log('Baixando documento:', document.title);
     // Here you would initiate the download
@@ -56,7 +55,7 @@ function App() {
     }
   };
 
-  const handleFavorite = (document: Document) => {
+  const handleFavorite = (document: DocumentWithRelations) => {
     if (!user) {
       alert('Faça login para gerenciar favoritos');
       return;

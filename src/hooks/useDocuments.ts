@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { Database } from '../lib/database.types';
 import { SearchFilters } from '../types';
@@ -19,7 +19,7 @@ export function useDocuments() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchDocuments = async (filters?: SearchFilters) => {
+  const fetchDocuments = useCallback(async (filters?: SearchFilters) => {
     try {
       setLoading(true);
       setError(null);
@@ -85,7 +85,7 @@ export function useDocuments() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const incrementViewCount = async (documentId: string) => {
     try {
@@ -119,7 +119,7 @@ export function useDocuments() {
 
   useEffect(() => {
     fetchDocuments();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     documents,
