@@ -117,7 +117,12 @@ export default function DocumentUpload({ isOpen, onClose, onSuccess }: DocumentU
       .from('documents')
       .upload(filePath, file);
 
-    if (uploadError) throw uploadError;
+    if (uploadError) {
+      if (uploadError.message?.includes('Bucket not found')) {
+        throw new Error('O bucket de armazenamento não foi configurado. Entre em contato com o administrador do sistema.');
+      }
+      throw uploadError;
+    }
 
     const { data } = supabase.storage
       .from('documents')
