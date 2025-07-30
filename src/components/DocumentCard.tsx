@@ -137,7 +137,7 @@ export default function DocumentCard({
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
               <Eye className="h-4 w-4 mr-1" />
-              <span>{document.viewCount.toLocaleString()}</span>
+              <span>{(document.view_count || 0).toLocaleString()}</span>
             </div>
             <div className="flex items-center">
               <Download className="h-4 w-4 mr-1" />
